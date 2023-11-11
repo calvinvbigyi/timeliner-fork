@@ -1413,17 +1413,17 @@ function LayerCabinet(data, dispatcher) {
 		dropdown.add(option);
 
 		var regex = new RegExp(STORAGE_PREFIX$1 + '(.*)');
-		for (var key in localStorage) {
-			// console.log(key);
+		// for (var key in localStorage) {
+		// 	// console.log(key);
 
-			var match = regex.exec(key);
-			if (match) {
-				option = document.createElement('option');
-				option.text = match[1];
+		// 	var match = regex.exec(key);
+		// 	if (match) {
+		// 		option = document.createElement('option');
+		// 		option.text = match[1];
 
-				dropdown.add(option);
-			}
-		}
+		// 		dropdown.add(option);
+		// 	}
+		// }
 
 	}
 
@@ -3361,7 +3361,7 @@ function Timeliner(target) {
 		var json = data.getJSONString();
 
 		try {
-			localStorage[STORAGE_PREFIX + name] = json;
+			// localStorage[STORAGE_PREFIX + name] = json;
 			dispatcher.fire('save:done');
 		} catch (e) {
 			console.log('Cannot save', name, json);
@@ -3449,7 +3449,7 @@ function Timeliner(target) {
 
 	function open(title) {
 		if (title) {
-			loadJSONString(localStorage[STORAGE_PREFIX + title]);
+			// loadJSONString(localStorage[STORAGE_PREFIX + title]);
 		}
 	}
 
@@ -3653,14 +3653,14 @@ function Timeliner(target) {
 	var trash = new IconButton(12, 'trash', 'Delete save', dispatcher);
 	trash.onClick(function() {
 		var name = data.get('name').value;
-		if (name && localStorage[STORAGE_PREFIX + name]) {
-			var ok = confirm('Are you sure you wish to delete ' + name + '?');
-			if (ok) {
-				delete localStorage[STORAGE_PREFIX + name];
-				dispatcher.fire('status', name + ' deleted');
-				dispatcher.fire('save:done');
-			}
-		}
+		// if (name && localStorage[STORAGE_PREFIX + name]) {
+		// 	var ok = confirm('Are you sure you wish to delete ' + name + '?');
+		// 	if (ok) {
+		// 		delete localStorage[STORAGE_PREFIX + name];
+		// 		dispatcher.fire('status', name + ' deleted');
+		// 		dispatcher.fire('save:done');
+		// 	}
+		// }
 	});
 	style(trash.dom, button_styles, { marginRight: '2px' });
 	bottom_right.appendChild(trash.dom);
