@@ -1292,12 +1292,6 @@ function LayerCabinet(data, dispatcher) {
 		dispatcher.fire('controls.undo');
 	});
 
-	var redo_button = new IconButton(16, 'repeat', 'redo', dispatcher);
-	style$1(redo_button.dom, op_button_styles);
-	redo_button.onClick(function() {
-		dispatcher.fire('controls.redo');
-	});
-
 	var range = document.createElement('input');
 	range.type = "range";
 	range.value = 0;
@@ -1472,17 +1466,6 @@ function LayerCabinet(data, dispatcher) {
 
 	populateOpen();
 
-	// // json import
-	// var import_json = new IconButton(16, 'signin', 'Import JSON', dispatcher);
-	// operations_div.appendChild(import_json.dom);
-	// import_json.onClick(function() {
-	// 	dispatcher.fire('import');
-	// });
-
-	// // new
-	// var file_alt = new IconButton(16, 'file_alt', 'New', dispatcher);
-	// operations_div.appendChild(file_alt.dom);
-
 	// save
 	var save = new IconButton(16, 'save', 'Save', dispatcher);
 	style$1(save.dom, op_button_styles);
@@ -1499,28 +1482,12 @@ function LayerCabinet(data, dispatcher) {
 		dispatcher.fire('save_as');
 	});
 
-	// download json (export)
-	var download_alt = new IconButton(16, 'download_alt', 'Download / Export JSON to file', dispatcher);
-	style$1(download_alt.dom, op_button_styles);
-	operations_div.appendChild(download_alt.dom);
-	download_alt.onClick(function() {
-		dispatcher.fire('export');
-	});
-
-	var upload_alt = new IconButton(16, 'upload_alt', 'Load from file', dispatcher);
-	style$1(upload_alt.dom, op_button_styles);
-	operations_div.appendChild(upload_alt.dom);
-	upload_alt.onClick(function() {
-		dispatcher.fire('openfile');
-	});
-
 	var span = document.createElement('span');
 	span.style.width = '20px';
 	span.style.display = 'inline-block';
 	operations_div.appendChild(span);
 
 	operations_div.appendChild(undo_button.dom);
-	operations_div.appendChild(redo_button.dom);
 	operations_div.appendChild(document.createElement('br'));
 
 	function changeRange() {
@@ -3532,28 +3499,6 @@ function Timeliner(target) {
 		borderBottom: '1px solid ' + Theme.b,
 		textAlign: 'center'
 	});
-
-	var title_bar = document.createElement('span');
-	pane_title.appendChild(title_bar);
-
-	title_bar.innerHTML = 'Timeliner ' + TIMELINER_VERSION;
-	pane_title.appendChild(title_bar);
-
-	var top_right_bar = document.createElement('div');
-	style(top_right_bar, header_styles, {
-		textAlign: 'right'
-	});
-
-	pane_title.appendChild(top_right_bar);
-
-	// resize minimize
-	// var resize_small = new IconButton(10, 'resize_small', 'minimize', dispatcher);
-	// top_right_bar.appendChild(resize_small.dom);
-
-	// resize full
-	var resize_full = new IconButton(10, 'resize_full', 'maximize', dispatcher);
-	style(resize_full.dom, button_styles, { marginRight: '2px' });
-	top_right_bar.appendChild(resize_full.dom);
 
 	var pane_status = document.createElement('div');
 
