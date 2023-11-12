@@ -1292,6 +1292,12 @@ function LayerCabinet(data, dispatcher) {
 		dispatcher.fire('controls.undo');
 	});
 
+	var redo_button = new IconButton(16, 'repeat', 'redo', dispatcher);
+	style$1(redo_button.dom, op_button_styles);
+	redo_button.onClick(function() {
+		dispatcher.fire('controls.redo');
+	});
+
 	var range = document.createElement('input');
 	range.type = "range";
 	range.value = 0;
@@ -1372,12 +1378,6 @@ function LayerCabinet(data, dispatcher) {
 	top.appendChild(operations_div);
 	// top.appendChild(document.createElement('br'));
 
-
-	// open _alt
-	var file_open = new IconButton(16, 'folder_open_alt', 'Open', dispatcher);
-	style$1(file_open.dom, op_button_styles);
-	operations_div.appendChild(file_open.dom);
-
 	function populateOpen() {
 		while (dropdown.length) {
 			dropdown.remove(0);
@@ -1421,51 +1421,6 @@ function LayerCabinet(data, dispatcher) {
 
 	}
 
-	// listen on other tabs
-	window.addEventListener('storage', function(e) {
-		var regex = new RegExp(STORAGE_PREFIX$1 + '(.*)');
-		if (regex.exec(e.key)) {
-			populateOpen();
-		}
-	});
-
-	dispatcher.on('save:done', populateOpen);
-
-	var dropdown = document.createElement('select');
-
-	style$1(dropdown, {
-		position: 'absolute',
-		// right: 0,
-		// margin: 0,
-		opacity: 0,
-		width: '16px',
-		height: '16px',
-		// zIndex: 1,
-	});
-
-	dropdown.addEventListener('change', function(e) {
-		// console.log('changed', dropdown.length, dropdown.value);
-
-		switch (dropdown.value) {
-		case '*new*':
-			dispatcher.fire('new');
-			break;
-		case '*import*':
-			dispatcher.fire('import');
-			break;
-		case '*select*':
-			dispatcher.fire('openfile');
-			break;
-		default:
-			dispatcher.fire('open', dropdown.value);
-			break;
-		}
-	});
-
-	file_open.dom.insertBefore(dropdown, file_open.dom.firstChild);
-
-	populateOpen();
-
 	// save
 	var save = new IconButton(16, 'save', 'Save', dispatcher);
 	style$1(save.dom, op_button_styles);
@@ -1488,6 +1443,7 @@ function LayerCabinet(data, dispatcher) {
 	operations_div.appendChild(span);
 
 	operations_div.appendChild(undo_button.dom);
+	operations_div.appendChild(redo_button.dom);
 	operations_div.appendChild(document.createElement('br'));
 
 	function changeRange() {
@@ -3076,7 +3032,7 @@ function LayerProp(name) {
 	*/
 }
 
-function Timeliner(target) {
+function Timeliner(target, figmaComponentData) {
 	// Dispatcher for coordination
 	var dispatcher = new Dispatcher();
 
@@ -3087,6 +3043,7 @@ function Timeliner(target) {
 
 	window._data = data; // expose it for debugging
 
+	console.log(figmaComponentData)
 	// Undo manager
 	var undo_manager = new UndoManager(dispatcher);
 
@@ -3829,5 +3786,3 @@ function Timeliner(target) {
 
 
 window.Timeliner = Timeliner;
-
-// export { Timeliner };
